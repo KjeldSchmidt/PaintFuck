@@ -73,6 +73,7 @@
       const COLORS = ['#000', '#36f', '#0c0', '#0cc',
         '#c00', '#c0c', '#cc0', '#ccc']
       const GRID_SIZE = 256
+      const CELL_VALUE_LIMIT = 256
       const SCALE = 4
       const PADDING = 8
       const PANEL_HEIGHT = 40
@@ -95,14 +96,6 @@
       let ctx
       let status
       let text
-
-      let buttonColor
-      let buttonForward
-      let buttonRotate
-      let buttonBlock
-      let buttonRepeat
-      let buttonDelete
-      let buttons
 
       const demos = {}
       let prevText
@@ -237,7 +230,16 @@
               ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
               ++idx
               break
-
+            case '-':
+              gridTape[y][x] += CELL_VALUE_LIMIT - 1
+              gridTape[y][x] %= CELL_VALUE_LIMIT
+              ++idx
+              break
+            case '+':
+              gridTape[y][x] += 1
+              gridTape[y][x] %= CELL_VALUE_LIMIT
+              ++idx
+              break
             case '[':
               stack.push([idx + 1, 1])
               ++idx
@@ -328,7 +330,8 @@
         let result = ''
         for (let i = 0; i < text.value.length; ++i) {
           const ch = text.value.charAt(i).toUpperCase()
-          if (ch === 'C' || ch === '[' || ch === ']' || ch === '>' || ch === '<' || ch === 'V' || ch === '^')  {
+          let allowed_chars = ['C', '[', ']', '>', '<', 'V', '^', '+', "-"];
+          if (allowed_chars.includes(ch))  {
             result += ch
           }
         }
