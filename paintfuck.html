@@ -1,15 +1,14 @@
 <!--
-  CFR Brackets 0.3.0-dev1
-  Copyright (c) 2023 Susam Pal
-  Source: https://github.com/susam/cfr
+  Copyright (c) 2023 Kjeld Schmidt
+  Source: https://github.com/KjeldSchmidt/PaintFuck
   License: MIT
 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CFR[]</title>
+    <title>PaintFuck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An extremely minimal drawing language consisting of only five simple commands: C, F, R, [, and ].">
+    <meta name="description" content="Brainfuck, on a canvas">
     <style>
       body {
         background: #111;
@@ -135,12 +134,6 @@
         text.addEventListener('cut', actionKey)
 
         // Add event listeners for buttons.
-        buttonColor.addEventListener('click', actionColor)
-        buttonForward.addEventListener('click', actionForward)
-        buttonRotate.addEventListener('click', actionRotate)
-        buttonBlock.addEventListener('click', actionBlock)
-        buttonRepeat.addEventListener('click', actionRepeat)
-        buttonDelete.addEventListener('click', actionDelete)
         window.addEventListener('hashchange', actionHash)
         window.addEventListener('resize', resize)
 
@@ -330,70 +323,6 @@
         }
       }
 
-      function actionColor (e) {
-        e.preventDefault()
-        insertText('C')
-        draw()
-      }
-
-      function actionForward (e) {
-        e.preventDefault()
-        insertText('F')
-        draw()
-      }
-
-      function actionRotate (e) {
-        e.preventDefault()
-        insertText('R')
-        draw()
-      }
-
-      function actionBlock (e) {
-        e.preventDefault()
-        insertText('[')
-        draw()
-      }
-
-      function actionRepeat (e) {
-        e.preventDefault()
-        insertText(']')
-        draw()
-      }
-
-      function actionDelete (e) {
-        e.preventDefault()
-        deleteText()
-        draw()
-      }
-
-      function insertText (ch) {
-        const cursorStart = text.selectionStart
-        const left = text.value.substring(0, cursorStart)
-        const right = text.value.substring(text.selectionEnd)
-        text.value = left + ch + right
-        text.focus()
-        text.setSelectionRange(cursorStart + 1, cursorStart + 1)
-        updateHash()
-      }
-
-      function deleteText () {
-        let cursorStart = text.selectionStart
-        let left
-        const right = text.value.substring(text.selectionEnd)
-        if (text.selectionEnd > cursorStart) {
-          left = text.value.substring(0, cursorStart)
-        } else if (cursorStart > 0) {
-          left = text.value.substring(0, cursorStart - 1)
-          --cursorStart
-        } else {
-          left = ''
-        }
-        text.value = left + right
-        text.focus()
-        text.setSelectionRange(cursorStart, cursorStart)
-        updateHash()
-      }
-
       function sanitizeText () {
         const cursorStart = text.selectionStart
         const cursorEnd = text.selectionEnd
@@ -480,19 +409,11 @@
     <canvas id="canvas"></canvas>
     <pre id="status"></pre>
     <input id="text" inputmode="none" autofocus
-           placeholder="Type code or type digit or press buttons below.">
-    <div>
-      <button id="color" title="Color">C</button><!--
-      --><button id="forward" title="Forward">F</button><!--
-      --><button id="rotate" title="Rotate">R</button><!--
-      --><button id="block" title="Begin Block">[</button><!--
-      --><button id="repeat" title="Repeat Block">]</button><!--
-      --><button id="delete" title="Delete">&lt;</button>
-    </div>
+           placeholder="Type code (or a number for a demo)">
     <footer>
-      <a href="https://github.com/susam/cfr">GitHub</a>
-      <a href="https://mastodon.social/@susam">Mastodon</a>
-      <a href="https://github.com/susam/cfr/blob/main/LICENSE.md">License</a>
+      <a href="https://github.com/KjeldSchmidt/PaintFuck">GitHub</a>
+      <a href="https://kjeld-schmidt.com">Kjeld Schmidt</a>
+      <a href="https://github.com/KjeldSchmidt/PaintFuck/blob/main/LICENSE.md">License</a>
     </footer>
   </body>
 </html>

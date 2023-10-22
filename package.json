@@ -1,21 +1,23 @@
 {
-  "name": "cfr",
-  "version": "0.2.0",
-  "description": "CFR Brackets: An extremely minimal drawing language consisting of only 5 simple commands: C, F, R, [, and ]",
-  "main": "cfr.html",
+  "name": "PaintFuck",
+  "version": "0.1.0",
+  "description": "Brainfuck on a canvas",
+  "main": "paintfuck.html",
   "files": [
-    "cfr.html"
+    "paintfuck.html"
   ],
   "keywords": [
     "game",
     "graphics",
-    "browser"
+    "browser",
+    "brainfuck",
+    "esolang"
   ],
-  "homepage": "https://github.com/susam/cfr",
-  "bugs": "https://github.com/susam/cfr/issues",
+  "homepage": "https://github.com/KjeldSchmidt/PaintFuck",
+  "bugs": "https://github.com/KjeldSchmidt/PaintFuck/issues",
   "license": "MIT",
-  "author": "Susam Pal (https://susam.net/)",
-  "repository": "github:susam/cfr",
+  "author": "Kjeld Schmidt (https://kjeld-schmidt.com)",
+  "repository": "github:KjeldSchmidt/PaintFuck",
   "devDependencies": {
     "standard": "latest",
     "eslint-plugin-html": "latest"

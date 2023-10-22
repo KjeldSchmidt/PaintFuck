@@ -1,14 +1,23 @@
 CFR[]
 =====
 
-CFR[] (CFR Brackets) is an extremely minimal drawing language that
-conists of only five simple commands:
+PaintFuck is a variation of BrainFuck, which operates on a canvas of paint
+rather than a tape of numbers.
 
-- `C`: Colour change.
-- `F`: Forward move by one cell.
-- `R`: Rotate right (clockwise) by 1/8th of a full turn.
-- `[`: Begin block.
-- `]`: Repeat current block.
+Operators:
+
+- `<`: Move the data pointer left
+- `>`: Move the data pointer right
+- `^`: Move the data pointer up
+- `v`: Move the data pointer down
+- `+`: Increment the value of the cell at the data pointer position
+- `-`: Decrement the value of the cell at the data pointer position
+- `[`: Repetition block start: If the byte at the current data pointer position
+  0, the instruction pointer will jump to the matching `]` command. If not, the 
+  instruction pointer will increment as normal.
+- `[`: Repetition block start: If the byte at the current data pointer position
+  is not 0, the instruction pointer will jump to the matching `[` command. If 
+  it is, the instruction pointer will increment as normal.
 
 [![Screenshot of CFR Brackets Colour Bars][IMG0]][DEMO0]
 
