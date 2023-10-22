@@ -179,6 +179,11 @@
         }
       }
 
+      function paintPixel (cellValue, x, y) {
+        ctx.fillStyle = COLORS[cellValue]
+        ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
+      }
+
       function evaluate (code) {
         let x = 0
         let y = 0
@@ -202,42 +207,32 @@
           const execIdx = idx
           const op = code.charAt(idx)
           switch (op) {
-            case "C":
-              color = (color + 1) % COLORS.length
-              ++idx
-              break
             case ">":
               x = (x + 1) % GRID_SIZE
-              ctx.fillStyle = COLORS[color]
-              ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
               ++idx
               break
             case "<":
               x = (x - 1 + GRID_SIZE) % GRID_SIZE
-              ctx.fillStyle = COLORS[color]
-              ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
               ++idx
               break
             case "^":
               y = (y - 1 + GRID_SIZE) % GRID_SIZE
-              ctx.fillStyle = COLORS[color]
-              ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
               ++idx
               break
             case "V":
               y = (y + 1) % GRID_SIZE
-              ctx.fillStyle = COLORS[color]
-              ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
               ++idx
               break
             case '-':
               gridTape[y][x] += CELL_VALUE_LIMIT - 1
               gridTape[y][x] %= CELL_VALUE_LIMIT
+              paintPixel(gridTape[y][x], x, y)
               ++idx
               break
             case '+':
               gridTape[y][x] += 1
               gridTape[y][x] %= CELL_VALUE_LIMIT
+              paintPixel(gridTape[y][x], x, y)
               ++idx
               break
             case '[':
