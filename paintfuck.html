@@ -236,7 +236,7 @@
               ++idx
               break
             case '[':
-              stack.push([idx + 1, 1])
+              stack.push(idx + 1)
               ++idx
               break
             case ']':
@@ -244,9 +244,9 @@
                 error('Unexpected \']\'')
                 return
               }
-              const [jmpIdx, count] = stack.pop()
-              if (count !== 0) {
-                stack.push([jmpIdx, count - 1])
+              const jmpIdx = stack.pop()
+              if (gridTape[y][x] !== 0) {
+                stack.push(jmpIdx)
                 idx = jmpIdx
               } else {
                 ++idx
