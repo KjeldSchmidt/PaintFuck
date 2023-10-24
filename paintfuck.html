@@ -355,7 +355,7 @@
         let result = ''
         for (let i = 0; i < text.value.length; ++i) {
           const ch = text.value.charAt(i).toUpperCase()
-          let allowed_chars = ['C', '[', ']', '>', '<', 'V', '^', '+', "-"];
+          let allowed_chars = ['[', ']', '>', '<', 'V', '^', '+', "-"];
           if (allowed_chars.includes(ch))  {
             result += ch
           }
