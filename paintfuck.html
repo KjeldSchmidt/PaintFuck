@@ -74,17 +74,17 @@
         '#c00', '#c0c', '#cc0', '#ccc']
       const GRID_SIZE = 64
       const CELL_VALUE_LIMIT = 256
-      const MAX_OPS = 1000000;
+      const MAX_OPS = 10000000;
       const SCALE = 16
       const PADDING = 8
       const PANEL_HEIGHT = 40
-      const MAX_CODE_LEN = 256
+      const MAX_CODE_LEN = 2048
       const MAX_DIST_LEN = 64
       const DEMOS = [
         '+[>>>>>>>>>V+]',
-        '[[[[[FF]]]]]',
-        '[[[[[[[FF]]]]RCC]]]',
-        '[[[[[[[[[[[[[[F]]]]RCC]]]RR[FFF][RRR][FF]]]]]]]]',
+        'VVVV>+++++++[<++++++++>-]<[>>>+++++++[<++++++++>-]^[V+^-]V+[[>]<[->+>+<<]>>[-<<+>>]<+[<]>-]<<-[-V+^]V]',
+        'VVVV--[>+]++V>>>>^^^^-----[V+]---<<<<^-[>V+]+',
+        '+++[>>>+++++++[<++++++++>-]<[[>]<[->+>][<]>-]<<-[-V+^]V]',
         'R[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]C]]]]]]]',
         '[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]',
         '[[[[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]R]]]',
@@ -180,7 +180,7 @@
       }
 
       function paintPixel (cellValue, x, y) {
-        ctx.fillStyle = COLORS[cellValue]
+        ctx.fillStyle = COLORS[cellValue % COLORS.length]
         ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
       }
 
