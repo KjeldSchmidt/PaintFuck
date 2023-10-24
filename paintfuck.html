@@ -117,7 +117,6 @@
         text.addEventListener('paste', actionKey)
         text.addEventListener('cut', actionKey)
 
-        // Add event listeners for buttons.
         window.addEventListener('hashchange', actionHash)
         window.addEventListener('resize', resize)
 
@@ -368,41 +367,17 @@
         }
       }
 
-      function urlEncode (s) {
-        s = s.replaceAll('[', 'B').replaceAll(']', 'E')
-        let result = ''
-        const match = s.match(/(.)\1*/g)
-        if (match !== null) {
-          for (let i = 0; i < match.length; ++i) {
-            result += match[i][0] + (match[i].length > 1 ? match[i].length : '')
-          }
-        }
-        return result
+      function urlEncode(textToEncode) {
+        return btoa(textToEncode)
       }
 
-      function urlDecode (s) {
-        s = s.replaceAll('B', '[').replaceAll('E', ']')
-        let result = ''
-        const match = s.match(/\D+|\d+/g)
-        const errMsg = 'Code embedded in URL exceeds ' + MAX_DIST_LEN +
-              ' bytes on expansion'
-        if (match !== null) {
-          for (let i = 0; i < match.length; ++i) {
-            if (/\D/.test(match[i][0]) || result === '') {
-              result += match[i]
-            } else {
-              const count = +match[i]
-              if (count > MAX_DIST_LEN) {
-                error(errMsg)
-                return null
-              }
-              result += result.charAt(result.length - 1).repeat(count - 1)
-            }
-            if (result.length > MAX_DIST_LEN) {
-              error(errMsg)
-              return null
-            }
-          }
+      function urlDecode (textToDecode) {
+        const result = atob(textToDecode)
+        if (result.length > MAX_DIST_LEN) {
+          const errMsg = 'Code embedded in URL exceeds ' + MAX_DIST_LEN +
+                ' bytes on expansion'
+          error(errMsg)
+          return null
         }
         return result
       }
