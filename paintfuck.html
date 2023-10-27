@@ -196,15 +196,13 @@
       function evaluate (code) {
         let x = 0
         let y = 0
-        let color = 7
-        let heading = 0
         let ops = 0
         let idx = 0
         const stack = []
         const gridTape = [...Array(GRID_SIZE)].map(_ => Array(GRID_SIZE).fill(0))
 
         startTime = Date.now()
-        logOp(ops, '-', idx, 'BEGIN', color, x, y, heading)
+        logOp(ops, '-', idx, 'BEGIN', x, y, gridTape)
 
         if (code.length > MAX_CODE_LEN) {
           error(`Code contains ${code.length} bytes; must not exceed ${MAX_CODE_LEN}`)
@@ -264,7 +262,6 @@
                       break
                   }
                 }
-
               }
 
               break
@@ -273,10 +270,10 @@
                 error('Unexpected \']\'')
                 return
               }
-              const jmpIdx = stack.pop()
+              const jumpIdx = stack.pop()
               if (gridTape[y][x] !== 0) {
-                stack.push(jmpIdx)
-                idx = jmpIdx
+                stack.push(jumpIdx)
+                idx = jumpIdx
               } else {
                 ++idx
               }
@@ -286,7 +283,7 @@
               return
           }
 
-          logOp(ops, execIdx, idx, op, color, x, y, heading)
+          logOp(ops, execIdx, idx, op, x, y, gridTape)
           ++ops
           if (ops > MAX_OPS) {
             applyOperationsLimit(startTime)
@@ -295,7 +292,7 @@
         }
 
         outputStatus(ops, startTime)
-        logOp(ops, '-', idx, 'END', color, x, y, heading)
+        logOp(ops, '-', idx, 'END', x, y, gridTape)
       }
 
       function error (msg) {
@@ -330,7 +327,6 @@
         if (encoded !== fragment) {
           window.history.replaceState(null, '', `#${encoded}`)
           log('set hash from code:', window.location.hash)
-
         }
       }
 
@@ -360,8 +356,8 @@
         let result = ''
         for (let i = 0; i < text.value.length; ++i) {
           const ch = text.value.charAt(i).toUpperCase()
-          let allowed_chars = ['[', ']', '>', '<', 'V', '^', '+', '-']
-          if (allowed_chars.includes(ch)) {
+          const allowedInstructions = ['[', ']', '>', '<', 'V', '^', '+', '-']
+          if (allowedInstructions.includes(ch)) {
             result += ch
           }
         }
@@ -393,9 +389,9 @@
         }
       }
 
-      function logOp (ops, execIdx, nextIdx, op, color, x, y, heading) {
+      function logOp (ops, execIdx, nextIdx, op, x, y, gridTape) {
         if (LOGGING) {
-          log(`(${ops}) ${execIdx}: ${op}; color: ${color}; x: ${x}; y: ${y}; next: ${nextIdx}`)
+          log(`(${ops}) ${execIdx}: ${op}; x: ${x}; y: ${y}; tapeValue: ${gridTape[y][x]} next: ${nextIdx}`)
         }
       }
 

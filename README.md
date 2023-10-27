@@ -1,4 +1,4 @@
-CFR[]
+Paintfuck
 =====
 
 PaintFuck is a variation of BrainFuck, which operates on a canvas of paint
@@ -306,25 +306,6 @@ The reference implementation generates errors when the following conditions are 
 When an error is generated, the entire canvas is painted red and the
 execution halts immediately.
 
-
-Distributable Links
--------------------
-
-The reference implementation provides distributable links when the
-input code is 64 bytes or less in length.  Note that the
-implementation allows code up to a maximum length of 256 bytes.
-However, no distributable link is generated when the code length
-exceeds 64 bytes.  Thus code that does not exceed 64 bytes in length
-has a special status in the reference implementation.
-
-The distributable link encodes the input code and appends it as a URL
-fragment to the address of the current page.  Copy the URL with the
-encoded input code embedded in it from the address bar of the web
-browser in order to share it with others.  When the recipient of the
-URL opens it with their web browser, the implementation reads the code
-embedded in the URL, expands it, and executes it.
-
-
 License
 -------
 
@@ -343,17 +324,7 @@ Support
 
 To report bugs or ask questions, [create issues][ISSUES].
 
-[ISSUES]: https://github.com/susam/cfr/issues
-
-
-More
-----
-
-See [Andromeda Invaders](https://github.com/susam/invaders), a
-1980s-arcade-style game written using HTML5, Canvas, and Web Audio.
-
-See [PC Face](https://github.com/susam/pcface), a collection of bitmap
-arrays for rendering CP437 glyphs using IBM PC OEM fonts.
+[ISSUES]: https://github.com/KjeldSchmidt/PaintFuck/issues
 
 <!--
 Release Checklist
@@ -369,6 +340,6 @@ Release Checklist
 - Run: git status; git add -p
 - Run: VERSION=<VERSION>
 - Run: git commit -em "Set version to $VERSION"
-- Run: git tag $VERSION -m "CFR[] $VERSION"
+- Run: git tag $VERSION -m "Paintfuck $VERSION"
 - Run: git push origin main $VERSION
 -->
