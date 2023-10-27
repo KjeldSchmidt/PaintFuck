@@ -92,7 +92,7 @@
       const PANEL_HEIGHT = 40
       const MAX_CODE_LEN = 8092
       const DEMOS = [
-        '+[>>>>>>>>>V+]',
+        '<----[>>>>>>>>>V++++]>-[>>>>>>>>>V+++]',
         'VVVV>+++++++[<++++++++>-]<[>>>+++++++[<++++++++>-]^[V+^-]V+[[>]<[->+>+<<]>>[-<<+>>]<+[<]>-]<<-[-V+^]V]',
         'VVVV--[>+]++V>>>>^^^^-----[V+]---<<<<^-[>V+]+',
         '+++[>>>+++++++[<++++++++>-]<[[>]<[->+>][<]>-]<<-[-V+^]V]',
@@ -283,8 +283,8 @@
             default:
               error('Unknown operation')
               return
-
           }
+
           logOp(ops, execIdx, idx, op, color, x, y, heading)
           ++ops
           if (ops > MAX_OPS) {
