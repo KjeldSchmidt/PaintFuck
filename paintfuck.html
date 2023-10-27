@@ -78,8 +78,7 @@
       const SCALE = 16
       const PADDING = 8
       const PANEL_HEIGHT = 40
-      const MAX_CODE_LEN = 2048
-      const MAX_DIST_LEN = 64
+      const MAX_CODE_LEN = 8092
       const DEMOS = [
         '+[>>>>>>>>>V+]',
         'VVVV>+++++++[<++++++++>-]<[>>>+++++++[<++++++++>-]^[V+^-]V+[[>]<[->+>+<<]>>[-<<+>>]<+[<]>-]<<-[-V+^]V]',
@@ -313,17 +312,14 @@
         normalizeDraw()
       }
 
-      function updateHash () {
-        if (text.value.length > MAX_DIST_LEN) {
-          window.history.replaceState(null, '', '#')
-        } else {
-          const encoded = urlEncode(text.value)
-          const hash = window.location.hash
-          const fragment = hash === '' ? '' : hash.substring(1)
-          if (encoded !== fragment) {
-            window.history.replaceState(null, '', '#' + encoded)
-            log('set hash from code:', window.location.hash)
-          }
+      function updateHash() {
+        const encoded = urlEncode(text.value)
+        const hash = window.location.hash
+        const fragment = hash === '' ? '' : hash.substring(1)
+        if (encoded !== fragment) {
+          window.history.replaceState(null, '', '#' + encoded)
+          log('set hash from code:', window.location.hash)
+
         }
       }
 
@@ -369,15 +365,8 @@
         return btoa(textToEncode)
       }
 
-      function urlDecode (textToDecode) {
-        const result = atob(textToDecode)
-        if (result.length > MAX_DIST_LEN) {
-          const errMsg = 'Code embedded in URL exceeds ' + MAX_DIST_LEN +
-                ' bytes on expansion'
-          error(errMsg)
-          return null
-        }
-        return result
+      function urlDecode(textToDecode) {
+        return atob(textToDecode)
       }
 
       function log () {
