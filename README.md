@@ -1,7 +1,7 @@
 Paintfuck
 =====
 
-PaintFuck is a variation of BrainFuck, which operates on a canvas of paint
+Paintfuck is a variation of Brainfuck, which operates on a canvas of paint
 rather than a tape of numbers.
 
 Operators:
@@ -324,7 +324,7 @@ Support
 
 To report bugs or ask questions, [create issues][ISSUES].
 
-[ISSUES]: https://github.com/KjeldSchmidt/PaintFuck/issues
+[ISSUES]: https://github.com/KjeldSchmidt/Paintfuck/issues
 
 <!--
 Release Checklist

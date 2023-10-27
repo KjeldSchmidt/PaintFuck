@@ -13,11 +13,11 @@
     "brainfuck",
     "esolang"
   ],
-  "homepage": "https://github.com/KjeldSchmidt/PaintFuck",
-  "bugs": "https://github.com/KjeldSchmidt/PaintFuck/issues",
+  "homepage": "https://github.com/KjeldSchmidt/Paintfuck",
+  "bugs": "https://github.com/KjeldSchmidt/Paintfuck/issues",
   "license": "MIT",
   "author": "Kjeld Schmidt (https://kjeld-schmidt.com)",
-  "repository": "github:KjeldSchmidt/PaintFuck",
+  "repository": "github:KjeldSchmidt/Paintfuck",
   "devDependencies": {
     "standard": "latest",
     "eslint-plugin-html": "latest"
