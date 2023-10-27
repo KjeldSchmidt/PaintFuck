@@ -5,76 +5,88 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>PaintFuck</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Brainfuck, on a canvas">
     <style>
-      body {
-        background: #111;
-        margin: 0;
-      }
-      canvas, pre, input, button {
-        background: #000;
-        box-sizing: border-box;
-        border: 1px solid #333;
-      }
-      canvas, pre, input {
-        display: block;
-        margin: 0 auto;
-      }
-      pre, input, button, a {
-        font-family: monospace,monospace;
-        font-size: 1em;
-        color: #999;
-      }
-      pre, input {
-        padding-left: 8px;
-      }
-      canvas {
-        image-rendering: pixelated;
-      }
-      pre {
-        overflow: auto;
-      }
-      input {
-        color: #ccc;
-        border-color: #666;
-      }
-      input:focus {
-        outline: none;
-      }
-      button {
-        color: #999;
-        font-weight: bold;
-        vertical-align: middle;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-      button:active {
-        background: #222;
-      }
-      div, footer {
-        text-align: center;
-      }
-      footer a {
-        line-height: 4;
-        margin-right: 1.5em;
-        color: #69c;
-      }
-      footer a:last-child {
-        margin-right: 0;
-      }
+        body {
+            background: #111;
+            margin: 0;
+        }
+
+        canvas, pre, input, button {
+            background: #000;
+            box-sizing: border-box;
+            border: 1px solid #333;
+        }
+
+        canvas, pre, input {
+            display: block;
+            margin: 0 auto;
+        }
+
+        pre, input, button, a {
+            font-family: monospace, monospace;
+            font-size: 1em;
+            color: #999;
+        }
+
+        pre, input {
+            padding-left: 8px;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+        }
+
+        pre {
+            overflow: auto;
+        }
+
+        input {
+            color: #ccc;
+            border-color: #666;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            color: #999;
+            font-weight: bold;
+            vertical-align: middle;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        button:active {
+            background: #222;
+        }
+
+        div, footer {
+            text-align: center;
+        }
+
+        footer a {
+            line-height: 4;
+            margin-right: 1.5em;
+            color: #69c;
+        }
+
+        footer a:last-child {
+            margin-right: 0;
+        }
     </style>
     <script>
       'use strict'
 
       const LOGGING = false
-      const COLORS = ['#000', '#36f', '#0c0', '#0cc',
-        '#c00', '#c0c', '#cc0', '#ccc']
+      const COLORS = ['#000', '#36f', '#0c0', '#0cc', '#c00', '#c0c', '#cc0', '#ccc']
       const GRID_SIZE = 64
       const CELL_VALUE_LIMIT = 256
-      const MAX_OPS = 10000000;
+      const MAX_OPS = 10000000
       const SCALE = 16
       const PADDING = 8
       const PANEL_HEIGHT = 40
@@ -130,27 +142,27 @@
       }
 
       function resize () {
-        document.body.style.padding = PADDING + 'px'
+        document.body.style.padding = `${PADDING}px`
         const availableWidth = window.innerWidth - 2 * PADDING
         const availableHeight = window.innerHeight - 3 * PANEL_HEIGHT - 5 * PADDING
 
         // Resize canvas.
         canvasSize = Math.min(availableWidth, availableHeight)
-        canvas.style.width = canvasSize + 'px'
-        canvas.style.height = canvasSize + 'px'
+        canvas.style.width = `${canvasSize}px`
+        canvas.style.height = `${canvasSize}px`
 
         // Resize status panel.
-        status.style.width = canvasSize + 'px'
-        status.style.height = PANEL_HEIGHT + 'px'
-        status.style.lineHeight = PANEL_HEIGHT + 'px'
-        status.style.marginTop = PADDING + 'px'
+        status.style.width = `${canvasSize}px`
+        status.style.height = `${PANEL_HEIGHT}px`
+        status.style.lineHeight = `${PANEL_HEIGHT}px`
+        status.style.marginTop = `${PADDING}px`
 
         // Resize code text panel.
-        text.style.width = canvasSize + 'px'
-        text.style.height = PANEL_HEIGHT + 'px'
-        text.style.marginTop = PADDING + 'px'
+        text.style.width = `${canvasSize}px`
+        text.style.height = `${PANEL_HEIGHT}px`
+        text.style.marginTop = `${PADDING}px`
 
-        log('resized: canvas: ' + canvasSize)
+        log(`resized: canvas: ${canvasSize}`)
       }
 
       function draw () {
@@ -171,9 +183,7 @@
         } else {
           const ms = Date.now() - startTime
           const rate = ms === 0 ? '-' : Math.round(10000 * ops / ms) / 10
-          const msg = text.value.length + ' bytes, ' + ops + ' ops, ' +
-                  (ms / 1000) + ' s, ' + rate + ' ops/s'
-          status.innerHTML = msg
+          status.innerHTML = `${text.value.length} bytes, ${ops} ops, ${(ms / 1000)}s, ${rate} ops/s`
         }
       }
 
@@ -204,19 +214,19 @@
           const execIdx = idx
           const op = code.charAt(idx)
           switch (op) {
-            case ">":
+            case '>':
               x = (x + 1) % GRID_SIZE
               ++idx
               break
-            case "<":
+            case '<':
               x = (x - 1 + GRID_SIZE) % GRID_SIZE
               ++idx
               break
-            case "^":
+            case '^':
               y = (y - 1 + GRID_SIZE) % GRID_SIZE
               ++idx
               break
-            case "V":
+            case 'V':
               y = (y + 1) % GRID_SIZE
               ++idx
               break
@@ -241,14 +251,14 @@
                 while (loopsToCloseCount > 0) {
                   ++idx
                   if (idx >= code.length) {
-                    error("Unmatched '['")
+                    error('Unmatched "["')
                     return
                   }
                   switch (code.charAt(idx)) {
-                    case "[":
+                    case '[':
                       ++loopsToCloseCount
                       break
-                    case "]":
+                    case ']':
                       --loopsToCloseCount
                       break
                   }
@@ -287,13 +297,13 @@
         logOp(ops, '-', idx, 'END', color, x, y, heading)
       }
 
-      function error(msg) {
+      function error (msg) {
         ctx.fillStyle = COLORS[4]
         ctx.fillRect(0, 0, GRID_SIZE * SCALE, GRID_SIZE * SCALE)
-        status.innerHTML = 'ERROR: ' + msg
+        status.innerHTML = `ERROR: ${msg}`
       }
 
-      function applyOperationsLimit(startTime) {
+      function applyOperationsLimit (startTime) {
         const duration = Date.now() - startTime
         status.innerHTML = `WARNING: Reached Operations limit of ${MAX_OPS} in ${duration} milliseconds.`
       }
@@ -312,12 +322,12 @@
         normalizeDraw()
       }
 
-      function updateHash() {
+      function updateHash () {
         const encoded = urlEncode(text.value)
         const hash = window.location.hash
         const fragment = hash === '' ? '' : hash.substring(1)
         if (encoded !== fragment) {
-          window.history.replaceState(null, '', '#' + encoded)
+          window.history.replaceState(null, '', `#${encoded}`)
           log('set hash from code:', window.location.hash)
 
         }
@@ -349,8 +359,8 @@
         let result = ''
         for (let i = 0; i < text.value.length; ++i) {
           const ch = text.value.charAt(i).toUpperCase()
-          let allowed_chars = ['[', ']', '>', '<', 'V', '^', '+', "-"];
-          if (allowed_chars.includes(ch))  {
+          let allowed_chars = ['[', ']', '>', '<', 'V', '^', '+', '-']
+          if (allowed_chars.includes(ch)) {
             result += ch
           }
         }
@@ -361,11 +371,11 @@
         }
       }
 
-      function urlEncode(textToEncode) {
+      function urlEncode (textToEncode) {
         return btoa(textToEncode)
       }
 
-      function urlDecode(textToDecode) {
+      function urlDecode (textToDecode) {
         return atob(textToDecode)
       }
 
@@ -378,29 +388,27 @@
           } else {
             ts = ((Date.now() - startTime) / 1000)
           }
-          console.log('[' + ts + '] ' + args.join(' '))
+          console.log(`[${ts}] ${args.join(' ')}`)
         }
       }
 
       function logOp (ops, execIdx, nextIdx, op, color, x, y, heading) {
         if (LOGGING) {
-          log('(' + ops + ') ' + execIdx + ': ' + op + '; color: ' + color +
-              '; x: ' + x + '; y: ' + y + '; next: ' + nextIdx)
+          log(`(${ops}) ${execIdx}: ${op}; color: ${color}; x: ${x}; y: ${y}; next: ${nextIdx}`)
         }
       }
 
       window.addEventListener('load', init)
     </script>
-  </head>
-  <body>
-    <canvas id="canvas"></canvas>
-    <pre id="status"></pre>
-    <input id="text" inputmode="none" autofocus
-           placeholder="Type code (or a number for a demo)">
-    <footer>
-      <a href="https://github.com/KjeldSchmidt/PaintFuck">GitHub</a>
-      <a href="https://kjeld-schmidt.com">Kjeld Schmidt</a>
-      <a href="https://github.com/KjeldSchmidt/PaintFuck/blob/main/LICENSE.md">License</a>
-    </footer>
-  </body>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<pre id="status"></pre>
+<input id="text" inputmode="none" autofocus placeholder="Type code (or a number from 0-6 for a demo)">
+<footer>
+    <a href="https://github.com/KjeldSchmidt/PaintFuck">GitHub</a>
+    <a href="https://kjeld-schmidt.com">Kjeld Schmidt</a>
+    <a href="https://github.com/KjeldSchmidt/PaintFuck/blob/main/LICENSE.md">License</a>
+</footer>
+</body>
 </html>
