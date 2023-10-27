@@ -19,9 +19,9 @@ rather than a tape of numbers.
   is not 0, the instruction pointer will jump to the matching `[` command. If 
   it is, the instruction pointer will increment as normal.
 
-[![Paintfuck color stripes][IMG0]][DEMO0]
+[![Paintfuck color stripes][IMG0]][DEMO1]
 
-**[See Demo][DEMO0]**
+**[See Demo][DEMO1]**
 
 **[Draw Now][DRAW1]**
 
@@ -33,14 +33,11 @@ Contents
 * [Implementation](#implementation)
 * [Get Started](#get-started)
 * [Demos](#demos)
-* [Canvas](#canvas)
+* [Canvas](#canvas-tape-and-color)
 * [Commands](#commands)
-* [Repeatable Blocks](#repeatable-blocks)
 * [Code Normalisation and Validation](#code-normalisation-and-validation)
-* [Distributable Links](#distributable-links)
 * [License](#license)
 * [Support](#support)
-* [More](#more)
 
 
 Introduction
