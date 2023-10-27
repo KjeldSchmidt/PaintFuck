@@ -70,26 +70,32 @@ the following links:
 Get Started
 -----------
 
-Enter the following code in the input field to draw a vertical column
-consisting of 16 cells:
+Enter the following code in the input field to create some colored pixels. 
+I encourage you to type it out character for character to get a simple feel for
+how it operates.
 
 ```
-FFFFFFFFFFFFFFFF
++>>++>>>>+++VVVVVV++++<<<<+++++<<++++++^^^>>>>-
 ```
 
-However, using the block commands, this can be shortened to the
-following code:
+The following code uses a loop to fill an entire horizontal line. It 
+accomplishes this by setting the first cell to -1 (=255), then moving right and 
+incrementing each cell until the field becomes 0 _after_ adding to it - which is
+the case for our first cell. The pointer has to wrap around the edge for that.
 
 ```
-[[[FF]]]
+-[>+]+
 ```
 
-Here is a slightly more involved code that draws a colourful octagon
-where each side of the octagon consists of 16 cells.
+As a simple check of understanding, try drawing a vertical and diagonal line, 
+and giving them different colors.
 
-```
-[[[[[[[FF]]]]RCC]]]
-```
+As your first challenge, try to think about how you can create a line segment of 
+arbitrary length, i.e. 3, 10 or 50 pixels, making it dependent only on the value
+of the first cell.
+
+To get a feel for messing around in 1D-Brainfuck, I highly recommend 
+[Brainfuck Visualizer](https://ashupk.github.io/Brainfuck/brainfuck-visualizer-master/index.html#).
 
 The maximum code length supported is 8092 bytes.
 
