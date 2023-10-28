@@ -187,7 +187,6 @@ Release Checklist
 -----------------
 
 - Update version in package.json.
-- Update version in HTML (1 place).
 - Update copyright in HTML (1 place).
 - Update copyright in LICENSE.md.
 - Disable logging.

@@ -1,6 +1,6 @@
 {
   "name": "paintfuck",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Paintfuck: Brainfuck on a canvas",
   "main": "paintfuck.html",
   "files": [
