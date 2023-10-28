@@ -75,7 +75,7 @@ I encourage you to type it out character for character to get a simple feel for
 how it operates.
 
 ```
-+>>++>>>>+++VVVVVV++++<<<<+++++<<++++++^^^>>>>-
++>>++>>>>+++vvvvvv++++<<<<+++++<<++++++^^^>>>>-
 ```
 
 The following code uses a loop to fill an entire horizontal line. It 
@@ -120,9 +120,9 @@ The drawing canvas is divided into a grid of 64x64 cells. Initially, all
 cells of the canvas contain the value 0, which is rendered in black.
 
 The data pointer starts in the top left corner, and can be moved using the `<`, 
-`>`, `V` and `^` instructions. If the data pointer moves out of bounds, it will
+`>`, `v` and `^` instructions. If the data pointer moves out of bounds, it will
 wrap around, remaining in the same row for `<` and `>`, or the same column for 
-`^` and `V`.
+`^` and `v`.
 
 Cells can take values from 0 to 255. Overflows are simply wrapped; Applying `-`
 to a cell with value `0` brings it to 255, and `+` will bring it back to `0`. 
