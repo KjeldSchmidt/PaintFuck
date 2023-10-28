@@ -109,6 +109,17 @@
       let status
       let text
 
+      let buttonRight
+      let buttonLeft
+      let buttonDown
+      let buttonUp
+      let buttonIncrement
+      let buttonDecrement
+      let buttonEndLoop
+      let buttonStartLoop
+      let buttonDelete
+      let buttons
+
       const demos = {}
       let prevText
 
@@ -123,11 +134,33 @@
         canvas.width = GRID_SIZE * SCALE
         canvas.height = GRID_SIZE * SCALE
 
-        // Add event listeners for text.
+        // Initialize buttons.
+        buttonRight = document.getElementById('right')
+        buttonLeft = document.getElementById('left')
+        buttonDown = document.getElementById('down')
+        buttonUp = document.getElementById('up')
+        buttonIncrement = document.getElementById('increment')
+        buttonDecrement = document.getElementById('decrement')
+        buttonStartLoop = document.getElementById('startLoop')
+        buttonEndLoop = document.getElementById('endLoop')
+        buttonDelete = document.getElementById('delete')
+        buttons = [buttonRight, buttonLeft, buttonDown, buttonUp, buttonIncrement, buttonDecrement, buttonEndLoop, buttonStartLoop, buttonDelete]
+
+        // Add event listeners for physical keyboard interaction.
         text.addEventListener('keyup', actionKey)
         text.addEventListener('paste', actionKey)
         text.addEventListener('cut', actionKey)
 
+        // add event listerns for provided virtual keyboard interaction
+        buttonRight.addEventListener('click', actionRight)
+        buttonLeft.addEventListener('click', actionLeft)
+        buttonDown.addEventListener('click', actionDown)
+        buttonUp.addEventListener('click', actionUp)
+        buttonIncrement.addEventListener('click', actionIncrement)
+        buttonDecrement.addEventListener('click', actionDecrement)
+        buttonEndLoop.addEventListener('click', actionEndLoop)
+        buttonStartLoop.addEventListener('click', actionStartLoop)
+        buttonDelete.addEventListener('click', actionDelete)
         window.addEventListener('hashchange', actionHash)
         window.addEventListener('resize', resize)
 
@@ -163,7 +196,17 @@
         text.style.height = `${PANEL_HEIGHT}px`
         text.style.marginTop = `${PADDING}px`
 
-        log(`resized: canvas: ${canvasSize}`)
+        // Resize buttons.
+        const buttonWidth = ((canvasSize - (buttons.length - 1) * PADDING) /
+          buttons.length)
+        for (let i = 0; i < buttons.length; ++i) {
+          const button = buttons[i]
+          button.style.marginTop = PADDING + 'px'
+          button.style.width = buttonWidth + 'px'
+          button.style.height = PANEL_HEIGHT + 'px'
+          button.style.marginLeft = (i === 0 ? 0 : PADDING) + 'px'
+        }
+        log('resized: canvas: ' + canvasSize + '; button: ' + buttonWidth)
       }
 
       function draw () {
@@ -348,6 +391,81 @@
         }
       }
 
+      function actionRight (e) {
+        e.preventDefault()
+        insertText('>')
+        draw()
+      }
+      function actionLeft (e) {
+        e.preventDefault()
+        insertText('<')
+        draw()
+      }
+      function actionDown (e) {
+        e.preventDefault()
+        insertText('v')
+        draw()
+      }
+      function actionUp (e) {
+        e.preventDefault()
+        insertText('^')
+        draw()
+      }
+      function actionIncrement (e) {
+        e.preventDefault()
+        insertText('+')
+        draw()
+      }
+      function actionDecrement (e) {
+        e.preventDefault()
+        insertText('-')
+        draw()
+      }
+      function actionEndLoop (e) {
+        e.preventDefault()
+        insertText(']')
+        draw()
+      }
+      function actionStartLoop (e) {
+        e.preventDefault()
+        insertText('[')
+        draw()
+      }
+
+      function actionDelete (e) {
+        e.preventDefault()
+        deleteText()
+        draw()
+      }
+
+      function insertText (ch) {
+        const cursorStart = text.selectionStart
+        const left = text.value.substring(0, cursorStart)
+        const right = text.value.substring(text.selectionEnd)
+        text.value = left + ch + right
+        text.focus()
+        text.setSelectionRange(cursorStart + 1, cursorStart + 1)
+        updateHash()
+      }
+
+      function deleteText () {
+        let cursorStart = text.selectionStart
+        let left
+        const right = text.value.substring(text.selectionEnd)
+        if (text.selectionEnd > cursorStart) {
+          left = text.value.substring(0, cursorStart)
+        } else if (cursorStart > 0) {
+          left = text.value.substring(0, cursorStart - 1)
+          --cursorStart
+        } else {
+          left = ''
+        }
+        text.value = left + right
+        text.focus()
+        text.setSelectionRange(cursorStart, cursorStart)
+        updateHash()
+      }
+
       function sanitizeText () {
         const cursorStart = text.selectionStart
         const cursorEnd = text.selectionEnd
@@ -401,7 +519,18 @@
 <body>
 <canvas id="canvas"></canvas>
 <pre id="status"></pre>
-<input id="text" autofocus placeholder="Type code (or a number from 0-7 for a demo)">
+<input id="text" inputmode="none" autofocus placeholder="Type code (or a number from 0-7 for a demo)">
+<div>
+    <button id="right" title="Right">&gt;</button>
+    <button id="left" title="Left">&lt;</button>
+    <button id="down" title="Down">v</button>
+    <button id="up" title="Up">^</button>
+    <button id="increment" title="Increment">&plus;</button>
+    <button id="decrement" title="Decrement">&minus;</button>
+    <button id="startLoop" title="Start Loop">[</button>
+    <button id="endLoop" title="End Loop">]</button>
+    <button id="delete" title="Delete">&leftarrow;</button>
+</div>
 <footer>
     <a href="https://github.com/KjeldSchmidt/Paintfuck">GitHub</a>
     <a href="https://kjeld-schmidt.com">Kjeld Schmidt</a>
