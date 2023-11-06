@@ -103,6 +103,7 @@
       ]
 
       let startTime = null
+      let animationState = "STOPPED"
       let canvas
       let canvasSize
       let ctx
@@ -209,9 +210,16 @@
         log('resized: canvas: ' + canvasSize + '; button: ' + buttonWidth)
       }
 
-      function draw () {
+      async function draw () {
         if (prevText === text.value) {
           return
+        }
+
+        if (animationState !== 'STOPPED') {
+          animationState = 'CANCEL'
+          while (animationState !== "STOPPED") {
+            await new Promise(r => setTimeout(r, 10))
+          }
         }
         log('draw', text.value)
         ctx.fillStyle = COLORS[0]
@@ -236,11 +244,12 @@
         ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
       }
 
-      function evaluate (code) {
+      async function evaluate (code) {
         let x = 0
         let y = 0
         let ops = 0
         let idx = 0
+        animationState = "ANIMATING"
         const stack = []
         const gridTape = [...Array(GRID_SIZE)].map(_ => Array(GRID_SIZE).fill(0))
 
@@ -328,12 +337,21 @@
 
           logOp(ops, execIdx, idx, op, x, y, gridTape)
           ++ops
+          await new Promise(r => {
+            outputStatus(ops, startTime)
+            setTimeout(r, 0)
+          });
+          if (animationState === "CANCEL") {
+            animationState = "STOPPED";
+            return
+          }
           if (ops > MAX_OPS) {
             applyOperationsLimit(startTime)
             return
           }
         }
 
+        animationState = "STOPPED"
         outputStatus(ops, startTime)
         logOp(ops, '-', idx, 'END', x, y, gridTape)
       }
